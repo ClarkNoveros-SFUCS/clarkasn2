@@ -173,4 +173,9 @@ public class Users {
     public void setModifiedAt(LocalDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
+
+    //method for the overall score, I will use the average 
+    public double getAverageScore(){
+        return Math.round(((clarity + niceness + knowledgeableScore ) / 3.0) * 10) / 10;
+    }
 }
