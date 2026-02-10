@@ -178,4 +178,14 @@ public class Users {
     public double getAverageScore(){
         return Math.round(((clarity + niceness + knowledgeableScore ) / 3.0) * 10) / 10;
     }
+
+    private StaffMemberProfile profile;
+
+    public StaffMemberProfile getProfile(){
+        return profile;
+    }
+
+    public void setProfile(StaffMemberProfile profile){
+        this.profile = profile;
+    }
 }

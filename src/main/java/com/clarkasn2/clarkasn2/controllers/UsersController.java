@@ -27,7 +27,7 @@ import com.clarkasn2.clarkasn2.models.Users;
 @Controller
 public class UsersController {
 
-    private List<Users> usersList = new ArrayList<>();
+    private final List<Users> usersList = new ArrayList<>();
 
     //-->INDEX PAGE<--
     @GetMapping("users/index")
