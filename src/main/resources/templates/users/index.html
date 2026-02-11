@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Index Page</title>
+        <link rel="stylesheet" href="/src/main/resources/static/assets/styles.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body class="bg-secondary-subtle">
@@ -28,22 +29,69 @@
     </nav>
 
     <div class="container text-center pt-5" id="ratings-container">
-        <div class="row">
-            <div class="card mb-3">
-                <!--Name-->
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <p>Bobby Chan</p>
-                </div>
-            <div class="row">
-                <!--Clarity-->
-                <div class="mb-2">
-                    <p>Clarity:</p>
-                    <p>10</p>
-                </div>
+        <div class="row justify-content-center g-4">
 
-                <div class="mb-2">
-                    <p>Niceness:</p>
-                    <p>10</p>
+            <div class="col-md-6" th:each="u : ${users}">
+                <div class="card mb-3">
+                    <div class="card-body">
+                    <!--Name-->
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <p class="custom-red fw-semibold fs-2 mb-0" th:text="${u.profile.displayName(u.name)}">
+                                Professor Bobby Chan
+                            </p>
+                        </div>
+                    <div class="row text-center">
+                        <!--Clarity-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis">Clarity:</p>
+                            <p class="fw-bold fs-3 custom-red-muted mb-0" th:text="${u.clarity}">10</p>
+                        </div>
+                        <!--Niceness-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis">Niceness:</p>
+                            <p class="fw-bold fs-3 custom-red-muted" th:text="${u.niceness}">10</p>
+                        </div>
+                        <!--Knowledge-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis">Knowledge:</p>
+                            <p class="fw-bold fs-3 custom-red-muted" th:text="${u.knowledgeableScore}">10</p>
+                        </div>
+                        <!--Average-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis">Average: </p>
+                            <p class="fw-bold fs-3 custom-red-muted" th.text="${u.averageScore}">9.5</p>
+                        </div>
+                    </div>
+
+                    <!--Comments-->
+                    <div class="text-start mb-3">
+                        <p class="mb-1 text-muted fw-semibold">Comments</p>
+
+                        <div class="border rounded p-2 bg-light" th:if="${u.comment != null and !#strings.isEmpty(u.comment)}">
+                            <p class="mb-0" th:text="${u.comment}">My CMPT276 Prof.</p>
+                        </div>
+
+                        <p class="text-muted fs-italic mb-0" th:if="{u.comment == null or #strings.isEmpty(u.comment)}">
+                            No comments.
+                        </p>
+                    </div>
+
+                    <!--Created and Edited-->
+                    <div class="text-start d-flex justify-content-between">
+                        <p class="fs-6 fw-lighter text-muted mb-0">
+                            Created at: 
+                            <span th:text="${#temporals.format(u.createdAt, 'MMM d, yyyy')}">Feb 11, 2026</span>
+                        </p>
+                        <p class="fs-6 fw-lighter text-muted d-block">
+                            Edited at: 
+                            <span th:text="${#temporals.format(u.modifiedAt, 'MMM d, yyyy')}">Feb 11, 2026</span>
+                        </p>
+                    </div>
+                    <!--View button-->
+                    <a class="btn btn-sm btn-outline-dark" th:href="@{/users/details/{uid}(uid=${u.uid})}">
+                        View More
+                    </a>
+
                 </div>
             </div>
         </div>

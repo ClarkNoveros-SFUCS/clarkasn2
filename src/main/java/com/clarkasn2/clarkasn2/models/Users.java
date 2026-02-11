@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -85,12 +86,13 @@ public class Users {
 
     //parameterized constructor 
     public Users(int uid, String name, String email, Role roleType, int clarity, int niceness, int knowledgeableScore, String comment){
+        this.uid = uid;
         this.name = name;
         this.email = email;
         this.roleType = roleType;
         this.clarity = clarity;
         this.niceness = niceness;
-        this.knowledgeableScore=knowledgeableScore;
+        this.knowledgeableScore = knowledgeableScore;
         this.comment = comment;
     }
 
@@ -176,9 +178,10 @@ public class Users {
 
     //method for the overall score, I will use the average 
     public double getAverageScore(){
-        return Math.round(((clarity + niceness + knowledgeableScore ) / 3.0) * 10) / 10;
+        return Math.round(((clarity + niceness + knowledgeableScore ) / 3.0) * 10) / 10.0;
     }
 
+    @Transient
     private StaffMemberProfile profile;
 
     public StaffMemberProfile getProfile(){
