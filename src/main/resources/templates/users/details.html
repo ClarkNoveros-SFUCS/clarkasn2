@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Details Page</title>
+        <link rel="stylesheet" href="/src/main/resources/static/assets/styles.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body class="bg-secondary-subtle">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="SFU LOGO">
+            <img src="/src/main/resources/static/assets/sfucslogo.png" alt="Logo" width="200" height="60" class="d-flex">
+            <h2>Staff Ratings</h2>
+          </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="#">New Rating</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container text-center pt-5" id="ratings-container">
+        <div class="row justify-content-center g-4">
+
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <!--Name-->
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <p class="custom-red fw-semibold fs-2 mb-0" th:text="${user.profile.displayName(u.name)}">
+                                Professor Bobby Chan
+                            </p>
+
+                            <span class="badge bg-dark" th:text="${user.roleType}">
+                                PROF
+                            </span>
+                        </div>
+                    <!--Email-->
+                    <div class="text-start">
+                        <p class="mb-2 text-muted fw-light" th:text="${user.email}">
+                            bobbyc@sfu.ca
+                        </p>
+                    </div>
+                    <div class="row text-center">
+                        <!--Clarity-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis mb-1">Clarity:</p>
+                            <p class="fw-bold fs-3 custom-red-muted mb-0" th:text="${user.clarity}">10</p>
+                        </div>
+                        <!--Niceness-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis mb-1">Niceness:</p>
+                            <p class="fw-bold fs-3 custom-red-muted" th:text="${user.niceness}">10</p>
+                        </div>
+                        <!--Knowledge-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis mb-1">Knowledge:</p>
+                            <p class="fw-bold fs-3 custom-red-muted" th:text="${user.knowledgeableScore}">10</p>
+                        </div>
+                        <!--Average-->
+                        <div class="col-3">
+                            <p class="fw-bold text-secondary-emphasis mb-1">Average: </p>
+                            <p class="fw-bold fs-3 custom-red-muted" th.text="${user.averageScore}">9.5</p>
+                        </div>
+                    </div>
+
+                    <!--Comments-->
+                    <div class="text-start mb-3">
+                        <p class="mb-1 text-muted fw-semibold">Comments</p>
+
+                        <div class="border rounded p-2 bg-light" th:if="${u.comment != null and !#strings.isEmpty(user.comment)}">
+                            <p class="mb-0" th:text="${user.comment}">My CMPT276 Prof.</p>
+                        </div>
+
+                        <p class="text-muted fs-italic mb-0" th:if="{user.comment == null or #strings.isEmpty(user.comment)}">
+                            No comments.
+                        </p>
+                    </div>
+
+                    <!--Created and Edited-->
+                    <div class="text-start d-flex justify-content-between">
+                        <p class="fs-6 fw-lighter text-muted mb-0">
+                            Created at: 
+                            <span th:text="${#temporals.format(user.createdAt, 'MMM d, yyyy')}">Feb 11, 2026</span>
+                        </p>
+                        <p class="fs-6 fw-lighter text-muted d-block">
+                            Edited at: 
+                            <span th:text="${#temporals.format(user.modifiedAt, 'MMM d, yyyy')}">Feb 11, 2026</span>
+                        </p>
+                    </div>
+                    <!--View button-->
+                    <div class="col">
+                        <a class="btn btn-sm btn-outline-dark" th:href="@{/users/details/{uid}(uid=${user.uid})}">
+                            Edit
+                        </a>
+                        <a class="btn btn-sm btn-outline-danger" th:href="@{/users/delete/{uid}(uid=${user.uid})}">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+
+
+    
+</html>
