@@ -182,13 +182,17 @@ public class Users {
     }
 
     @Transient
-    private StaffMemberProfile profile;
+    public String getDisplayName(){
+        if (roleType == null){
+            return name;
+        }
+        if(roleType == Role.PROF){
+            return new ProfessorProfile().displayName(name);
+        }
+        if(roleType == Role.INSTRUCTOR){
+            return new InstructorProfile().displayName(name);
+        }
 
-    public StaffMemberProfile getProfile(){
-        return profile;
-    }
-
-    public void setProfile(StaffMemberProfile profile){
-        this.profile = profile;
+        return name;
     }
 }

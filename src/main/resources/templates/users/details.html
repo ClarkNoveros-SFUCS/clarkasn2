@@ -5,14 +5,32 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Details Page</title>
-        <link rel="stylesheet" href="/src/main/resources/static/assets/styles.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/assets/styles.css}">
   </head>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const deleteModalEl = document.getElementById('deleteModal');
+      const deleteForm = document.getElementById('deleteForm');
+      const deleteText = document.getElementById('deleteModalText');
+  
+      deleteModalEl.addEventListener('show.bs.modal', (event) => {
+        const btn = event.relatedTarget;
+  
+        const userId = btn.getAttribute('data-userid');
+        const userName = btn.getAttribute('data-username') || 'this rating';
+  
+        // Set the POST action dynamically
+        deleteForm.action = `/users/delete/${userId}`;
+
+      });
+    });
+  </script>
   <body class="bg-secondary-subtle">
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="SFU LOGO">
-            <img src="/src/main/resources/static/assets/sfucslogo.png" alt="Logo" width="200" height="60" class="d-flex">
+          <a class="navbar-brand" th:href="@{/users/index}">
+            <img th:src="@{/assets/sfucslogo.png}" alt="Logo" width="200" height="60" class="d-flex">
             <h2>Staff Ratings</h2>
           </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,8 +38,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">New Rating</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/users/index}">Home</a>
+                    <a class="nav-link" th:href="@{/users/create}">New Rating</a>
                 </div>
             </div>
         </div>
@@ -29,13 +47,17 @@
 
     <div class="container text-center pt-5" id="ratings-container">
         <div class="row justify-content-center g-4">
-
             <div class="col-md-6">
+                <div class="text-start mb-3">
+                    <a class="btn btn-outline-secondary text-start" th:href="@{/users/index}">
+                        Back to Ratings
+                    </a>
+                </div>
                 <div class="card mb-3">
                     <div class="card-body">
                         <!--Name-->
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                            <p class="custom-red fw-semibold fs-2 mb-0" th:text="${user.profile.displayName(u.name)}">
+                            <p class="custom-red fw-semibold fs-2 mb-0" th:text="${user.displayName}">
                                 Professor Bobby Chan
                             </p>
 
@@ -68,7 +90,7 @@
                         <!--Average-->
                         <div class="col-3">
                             <p class="fw-bold text-secondary-emphasis mb-1">Average: </p>
-                            <p class="fw-bold fs-3 custom-red-muted" th.text="${user.averageScore}">9.5</p>
+                            <p class="fw-bold fs-3 custom-red-muted" th:text="${user.averageScore}">9.5</p>
                         </div>
                     </div>
 
@@ -76,11 +98,11 @@
                     <div class="text-start mb-3">
                         <p class="mb-1 text-muted fw-semibold">Comments</p>
 
-                        <div class="border rounded p-2 bg-light" th:if="${u.comment != null and !#strings.isEmpty(user.comment)}">
+                        <div class="border rounded p-2 bg-light" th:if="${user.comment != null and !#strings.isEmpty(user.comment)}">
                             <p class="mb-0" th:text="${user.comment}">My CMPT276 Prof.</p>
                         </div>
 
-                        <p class="text-muted fs-italic mb-0" th:if="{user.comment == null or #strings.isEmpty(user.comment)}">
+                        <p class="text-muted fst-italic mb-0" th:if="${user.comment == null or #strings.isEmpty(user.comment)}">
                             No comments.
                         </p>
                     </div>
@@ -98,26 +120,43 @@
                     </div>
                     <!--View button-->
                     <div class="col">
-                        <a class="btn btn-sm btn-outline-dark" th:href="@{/users/details/{uid}(uid=${user.uid})}">
+                        <a class="btn btn-sm btn-outline-dark" th:href="@{/users/edit/{uid}(uid=${user.uid})}">
                             Edit
                         </a>
-                        <a class="btn btn-sm btn-outline-danger" th:href="@{/users/delete/{uid}(uid=${user.uid})}">
+                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:attr="data-userid=${user.uid}">
                             Delete
-                        </a>
+                        </button>    
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
-
-
-    
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+      
+                    <div class="modal-body">
+                        <p class="mb-0" id="deleteModalText">
+                            Are you sure you want to delete this rating?
+                        </p>
+                    </div>
+      
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+      
+                    <form id="deleteForm" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    </body>
 </html>

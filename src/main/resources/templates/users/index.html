@@ -5,14 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Index Page</title>
-        <link rel="stylesheet" href="/src/main/resources/static/assets/styles.css">
+        <link rel="stylesheet" th:href="@{/assets/styles.css}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body class="bg-secondary-subtle">
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="SFU LOGO">
-            <img src="/src/main/resources/static/assets/sfucslogo.png" alt="Logo" width="200" height="60" class="d-flex">
+          <a class="navbar-brand" th:href="@{/users/index}">
+            <img th:src="@{/assets/sfucslogo.png}" alt="Logo" width="200" height="60" class="d-flex">
             <h2>Staff Ratings</h2>
           </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,41 +20,40 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">New Rating</a>
-                    <a class="nav-link" href="#">Edit Rating</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/users/index}">Home</a>
+                    <a class="nav-link" th:href="@{/users/create}">New Rating</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="container text-center pt-5" id="ratings-container">
+    <div class="container text-center py-5" id="ratings-container">
         <div class="row justify-content-center g-4">
-
-            <div class="col-md-6" th:each="u : ${users}">
+            <div class="col-12 col-md-8 col-lg-7" th:each="u : ${users}">
                 <div class="card mb-3">
-                    <div class="card-body">
+                    <div class="card-body p-4 p-md-5">
                     <!--Name-->
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <p class="custom-red fw-semibold fs-2 mb-0" th:text="${u.profile.displayName(u.name)}">
+                            <p class="custom-red-muted fw-bold fs-2 mb-0" th:text="${u.displayName}">
                                 Professor Bobby Chan
                             </p>
-                            <span class="badge bg-dark" th:text="${user.roleType}">
+                            <span class="badge bg-dark" th:text="${u.roleType}">
                                 PROF
                             </span>
                         </div>
-                    <div class="row text-center justify-content-center">
                         <!--Average-->
-                        <div class="col-3">
-                            <p class="fw-bold text-secondary-emphasis mb-1">Average: </p>
-                            <p class="fw-bold fs-3 custom-red-muted" th.text="${u.averageScore}">9.5</p>
+                        <div class="text-center mb-3">
+                            <p class="fw-bold fs-3 text-secondary-emphasis mb-1">Average: </p>
+                            <p class="fw-bold fs-2 custom-red-muted" th:text="${u.averageScore}"></p>
                         </div>
                     </div>
 
                     <!--View button-->
-                    <a class="btn btn-sm btn-outline-dark" th:href="@{/users/details/{uid}(uid=${u.uid})}">
-                        View More
-                    </a>
+                    <div class="text-center mb-3">
+                        <a class="btn btn-sm btn-outline-dark" th:href="@{/users/details/{uid}(uid=${u.uid})}">
+                            View More
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
