@@ -4,6 +4,74 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+        <title>Create Form</title>
+        <link rel="stylesheet" th:href="@{/assets/styles.css}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     </head>
+    <body class="bg-secondary-subtle">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" th:href="@{/users/index}">
+                <img th:src="@{/assets/sfucslogo.png}" alt="sfucslogo" width="200" height="60" class="d-flex ">
+                    <h2 class="mb-0">Create New User</h2>
+              </a>
+            </div>
+        </nav>
+    
+        <div class="container text-center pt-5" id="ratings-container">
+            <div class="row text-start">
+                <div class="card">
+                    <form th:action="@{/users/create}" method="post" th:object="${user}">
+                        <div class="mb-3">
+                            <label for="NameInput" class="form-label custom-red-muted fw-bold">Name:</label>
+                            <input type="name" class="form-control" th:field="*{name}" id="NameInput" placeholder="Simon Fraser">
+                        </div>
+                        <div class="mb-3">
+                            <label for="EmailInput" class="form-label custom-red-muted fw-bold">Email:</label>
+                            <input type="email" class="form-control" th:field="*{email}" id="EmailInput" placeholder="simonfraser@sfu.ca">
+                        </div>
+                        <div class="mb-3 text-start">
+                            <p class="custom-red-muted fw-bold mb-2">Role:</p>
+                            <select class="form-select" th:field="*{roleType}">
+                                <option value=""selected disabled>Select a Role</option>
+                                <option th:value="PROF">Professor</option>
+                                <option th:value="INSTRUCTOR">Instructor</option>
+                                <option th:value="TA">Teaching Assistant</option>
+                                <option th:value="STAFF">Staff</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="ClarityInput" class="form-label custom-red-muted fw-bold">Clarity:</label>
+                            <input type="number" min="1" max="10" class="form-control" th:field="*{clarity}">
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="NicenessInput" class="form-label custom-red-muted fw-bold">Niceness:</label>
+                            <input type="number" min="1" max="10" class="form-control" th:field="*{niceness}">
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="Knowledge" class="form-label custom-red-muted fw-bold">Knowledge:</label>
+                            <input type="number" min="1" max="10" class="form-control" th:field="*{knowledgeableScore}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="CommentInput" class="form-label custom-red-muted fw-bold">Comments:</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{comment}"></textarea>
+                            <div class="form-text">
+                                Comment is limited to 350 characters.
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a class="btn btn-sm btn-outline-secondary" th:href="@{/users/index}">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-outline-success">
+                                Save Changes
+                            </button>
+                        </div>
+                        <p th:text="Thymeleaf is working"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    </body>
 </html>
