@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clarkasn2.clarkasn2.models.Role;
 import com.clarkasn2.clarkasn2.models.Users;
+
+import jakarta.validation.Valid;
 
 
 
@@ -96,13 +99,15 @@ public class UsersController {
     
     //submit create form 
     @PostMapping("/users/create")
-    public String submitCreateForm(@ModelAttribute Users user, RedirectAttributes redirectAttributes){
+    public String submitCreateForm(@ModelAttribute Users user, RedirectAttributes redirectAttributes, BindingResult result, Model model){
 
+        if (result.hasErrors()){
+            return "users/create";
+        }
         user.setUid(usersList.size() + 1);
         usersList.add(user);
 
         redirectAttributes.addFlashAttribute("success", "User created!");
-
         return "redirect:/users/details/" + user.getUid();
     }
 
@@ -126,13 +131,17 @@ public class UsersController {
 
     //submit edit form 
     @PostMapping("/users/edit/{uid}")
-    public String submitEditForm(@PathVariable int uid, @ModelAttribute Users updatedUser, RedirectAttributes redirectAttributes) {
+    public String submitEditForm(@PathVariable int uid, @Valid @ModelAttribute Users updatedUser, BindingResult result, RedirectAttributes redirectAttributes) {
         
         Users user = usersList.stream().filter(u -> u.getUid() == uid).findFirst().orElse(null);
 
         if(user == null){
             redirectAttributes.addFlashAttribute("error", "User not in database.");
             return "redirect:/users/index";
+        }
+
+        if(result.hasErrors()){
+            return "users/edit";
         }
 
         //edit new data

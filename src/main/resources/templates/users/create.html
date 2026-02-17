@@ -25,6 +25,7 @@
                         <div class="mb-3">
                             <label for="NameInput" class="form-label custom-red-muted fw-bold">Name:</label>
                             <input type="text" class="form-control" th:field="*{name}" id="NameInput" placeholder="Simon Fraser">
+                            <div class="p-3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                         </div>
                         <div class="mb-3">
                             <label for="EmailInput" class="form-label custom-red-muted fw-bold">Email:</label>
