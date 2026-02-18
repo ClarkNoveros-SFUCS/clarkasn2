@@ -9,6 +9,10 @@ I used a Spring Boot framework, PostrgreSQL database, Docker for the container, 
 
 I also defined a style.css file for the custom colors that I found opensource from SFU, to get access to SFU's colour scheme. Find it over here at https://www.sfu.ca/communicators-toolkit/brand/guidelines/colours.html 
 
+### OOP Feature
+I defined a method called displayName, wherein if an entity is a Professor or Instructor, once the profile is created
+I automatically append a title of Professor or Instructor, since in the html thymeleaf templating I call this method, and according to the roleType the correct corresponding method will be called == Polymorphism.
+
 ## Getting Started
 
 ### Dependencies

@@ -85,7 +85,7 @@ public class Clarkasn2ControllerTests {
             .andExpect(model().attributeHasFieldErrors("user", "niceness"));
     }
 
-    //Is user redirected to the view page corresponding to uid?
+    //Is user redirected to the details page corresponding to uid?
     @Test 
     public void postCreate_SuccessRedirect() throws Exception{
         when(userRepo.save(any(Users.class))).thenAnswer(invocation -> {
