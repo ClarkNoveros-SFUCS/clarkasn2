@@ -57,10 +57,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="CommentInput" class="form-label custom-red-muted fw-bold">Comments:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{comment}"></textarea>
+                            <textarea class="form-control" id="CommentInput" rows="3" maxlength="350" th:field="*{comment}"></textarea>
                             <div class="form-text">
                                 Comment is limited to 350 characters.
                             </div>
+                            <div class="p-3 text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
                         </div>
                         <div class="d-flex gap-2 justify-content-end mt-4">
                             <a class="btn btn-sm btn-outline-secondary" th:href="@{/users/index}">

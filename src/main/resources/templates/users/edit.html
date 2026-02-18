@@ -26,10 +26,12 @@
                     <div class="mb-3">
                         <label for="NameInput" class="form-label custom-red-muted fw-bold">Name:</label>
                         <input type="text" class="form-control" th:field="*{name}" id="NameInput" placeholder="Simon Fraser">
+                        <div class="p-3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     </div>
                     <div class="mb-3">
                         <label for="EmailInput" class="form-label custom-red-muted fw-bold">Email:</label>
                         <input type="email" class="form-control" th:field="*{email}" id="EmailInput" placeholder="simonfraser@sfu.ca">
+                        <div class="p-3 text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
                     <div class="mb-3 text-start">
                         <p class="custom-red-muted fw-bold mb-2">Role:</p>
@@ -40,6 +42,7 @@
                             <option th:value="TA">Teaching Assistant</option>
                             <option th:value="STAFF">Staff</option>
                         </select>
+                        <div class="p-3 text-danger" th:if="${#fields.hasErrors('roleType')}" th:errors="*{roleType}"></div>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="ClarityInput" class="form-label custom-red-muted fw-bold">Clarity:</label>
@@ -55,10 +58,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="CommentInput" class="form-label custom-red-muted fw-bold">Comments:</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{comment}"></textarea>
+                        <textarea class="form-control" id="CommentInput" rows="3" maxlength="350" th:field="*{comment}"></textarea>
                         <div class="form-text">
                             Comment is limited to 350 characters.
                         </div>
+                        <div class="p-3 text-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>   
                     </div>
                     <div class="d-flex gap-2 justify-content-end mt-4">
                         <a class="btn btn-sm btn-outline-danger" th:href="@{/users/details/{uid}(uid=${user.uid})}">

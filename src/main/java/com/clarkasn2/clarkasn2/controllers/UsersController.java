@@ -117,7 +117,7 @@ public class UsersController {
 
     //submit edit form 
     @PostMapping("/users/edit/{uid}")
-    public String submitEditForm(@PathVariable int uid, @Valid @ModelAttribute Users updatedUser, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String submitEditForm(@PathVariable int uid, @Valid @ModelAttribute("user") Users updatedUser, BindingResult result, RedirectAttributes redirectAttributes) {
         
         if(result.hasErrors()){
             return "users/edit";

@@ -27,14 +27,15 @@
         </div>
     </nav>
 
+    <div class="p-4 fs-5 custom-red-muted text-center" th:if="${users.size() == 0}">No Ratings at this moment.</div>
     <div class="container text-center py-5" id="ratings-container">
         <div class="row justify-content-center g-4">
-            <div class="col-12 col-md-8 col-lg-7" th:each="u : ${users}">
+            <div class="col-10 col-md-8 col-lg-7" th:each="u : ${users}">
                 <div class="card mb-3">
                     <div class="card-body p-4 p-md-5">
                     <!--Name-->
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <p class="custom-red-muted fw-bold fs-2 mb-0" th:text="${u.displayName}">
+                            <p class="custom-red fw-bold fs-2 mb-0" th:text="${u.displayName}">
                                 Professor Bobby Chan
                             </p>
                             <span class="badge bg-dark" th:text="${u.roleType}">
