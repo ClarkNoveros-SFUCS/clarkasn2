@@ -30,6 +30,7 @@
                         <div class="mb-3">
                             <label for="EmailInput" class="form-label custom-red-muted fw-bold">Email:</label>
                             <input type="email" class="form-control" th:field="*{email}" id="EmailInput" placeholder="simonfraser@sfu.ca">
+                            <div class="p-3 text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                         </div>
                         <div class="mb-3 text-start">
                             <p class="custom-red-muted fw-bold mb-2">Role:</p>
@@ -40,6 +41,7 @@
                                 <option th:value="TA">Teaching Assistant</option>
                                 <option th:value="STAFF">Staff</option>
                             </select>
+                            <div class="p-3 text-danger" th:if="${#fields.hasErrors('roleType')}" th:errors="*{roleType}"></div>
                         </div>
                         <div class="mb-3 text-start">
                             <label for="ClarityInput" class="form-label custom-red-muted fw-bold">Clarity:</label>
