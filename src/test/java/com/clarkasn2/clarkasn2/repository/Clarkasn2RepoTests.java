@@ -1,14 +1,14 @@
 package com.clarkasn2.clarkasn2.repository;
 
-import com.clarkasn2.clarkasn2.models.Users;
-import com.clarkasn2.clarkasn2.models.UserRepository;
-import com.clarkasn2.clarkasn2.models.ProfessorProfile;
-import com.clarkasn2.clarkasn2.models.Role;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.clarkasn2.clarkasn2.models.InstructorProfile;
+import com.clarkasn2.clarkasn2.models.ProfessorProfile;
+import com.clarkasn2.clarkasn2.models.Role;
+import com.clarkasn2.clarkasn2.models.UserRepository;
+import com.clarkasn2.clarkasn2.models.Users;
 
 public class Clarkasn2RepoTests {
     @Autowired
@@ -49,9 +49,22 @@ public class Clarkasn2RepoTests {
         u.setName("Eric Clapton");
         u.setRoleType(Role.INSTRUCTOR);
 
-        String expected = new InstructorProfile().displayName("John Mayer");
+        String expected = new InstructorProfile().displayName("Eric Clapton");
         assertThat(u.getDisplayName()).isEqualTo(expected);
+    }
+
+    //Let's test getting the average
+    @Test
+    public void GetAverage_ReturnCorrectAverage(){
+        Users u = new Users();
+        u.setClarity(5);
+        u.setNiceness(4);
+        u.setKnowledgeableScore(5);
+
+        assertThat(u.getAverageScore()).isEqualTo(4.7);
+
     }
 
 
 }
+
