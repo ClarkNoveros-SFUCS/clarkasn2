@@ -43,7 +43,7 @@ mvn spring-boot:run
 
 Using Render URL:
 ```
-https://clarkasn2.onrender.com
+https://clarkasn2.onrender.com/users/index 
 ```
 * Do not forget to append: /users/index 
 * This will show you my main landing page.
